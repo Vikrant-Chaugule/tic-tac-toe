@@ -2,7 +2,7 @@ import React from 'react';
 import './player-wins.css';
 
 export const PlayerWins = (props) => {
-  const { player1Wins, player2Wins, onClickNewGame, winner } = props;
+  const { player1Wins, player2Wins, onClickNewGame, winner, tie } = props;
   const renderWinnerInfo = () => {
     if (winner)
       return (
@@ -11,6 +11,22 @@ export const PlayerWins = (props) => {
             style={{ color: '#1fadcc', marginTop: '10%', marginBottom: '10%' }}
           >
             Winner - {winner}
+          </p>
+          <p onClick={onClickNewGame}>New Game</p>
+        </div>
+      );
+
+    if (tie)
+      return (
+        <div className="wins-container-2">
+          <p
+            style={{
+              color: 'rgb(255, 0, 0)',
+              marginTop: '10%',
+              marginBottom: '10%',
+            }}
+          >
+            Match Tied
           </p>
           <p onClick={onClickNewGame}>New Game</p>
         </div>

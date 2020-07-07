@@ -5,6 +5,7 @@ import { PickSidePage } from './pages/pick-side-page/pick-side-page';
 function App() {
   const [selectedSide, setSelectedSide] = useState('X');
   const [pageName, setPageName] = useState('PICK_SIDE');
+  const [tie, setTie] = useState(false);
 
   const renderScreens = () => {
     switch (pageName) {
@@ -18,12 +19,16 @@ function App() {
         );
 
       case 'GAME':
-        return <GamePage selectedSide={selectedSide} />;
+        return (
+          <GamePage selectedSide={selectedSide} setTie={setTie} tie={tie} />
+        );
 
       default:
         return;
     }
   };
+
+  console.log('tie', tie);
 
   return <div>{renderScreens()}</div>;
 }

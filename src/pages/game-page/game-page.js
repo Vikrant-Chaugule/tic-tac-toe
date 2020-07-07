@@ -4,12 +4,12 @@ import './game-page.css';
 import { PlayerWins } from '../../components/player-wins/player-wins';
 
 export const GamePage = (props) => {
-  const { selectedSide } = props;
+  const { selectedSide, setTie, tie } = props;
   const [player1Wins, setPlayer1Wins] = useState(0);
   const [player2Wins, setPlayer2Wins] = useState(0);
   const [winner, setWinner] = useState('');
 
-  const initialArray = [
+  const initialMatrix = [
     [undefined, false],
     [undefined, false],
     [undefined, false],
@@ -20,11 +20,12 @@ export const GamePage = (props) => {
     [undefined, false],
     [undefined, false],
   ];
-  const [arr, setArr] = useState([...initialArray]);
+  const [gameMatrix, setGameMatrix] = useState([...initialMatrix]);
 
   const onClickNewGame = () => {
-    setArr([...initialArray]);
+    setGameMatrix([...initialMatrix]);
     setWinner('');
+    setTie(false);
   };
 
   return (
@@ -34,15 +35,18 @@ export const GamePage = (props) => {
         player2Wins={player2Wins}
         onClickNewGame={onClickNewGame}
         winner={winner}
+        tie={tie}
       />
       <GameBoard
         setPlayer1Wins={setPlayer1Wins}
         setPlayer2Wins={setPlayer2Wins}
         player1Wins={player1Wins}
         player2Wins={player2Wins}
-        arr={arr}
+        gameMatrix={gameMatrix}
         setWinner={setWinner}
         selectedIcon={selectedSide}
+        setTie={setTie}
+        tie={tie}
       />
     </div>
   );

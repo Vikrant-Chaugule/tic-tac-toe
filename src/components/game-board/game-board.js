@@ -5,19 +5,21 @@ import ticO from '../../assets/tic-tac-toe-o.jpg';
 
 export const GameBoard = (props) => {
   const {
-    arr,
+    gameMatrix,
     player1Wins,
     player2Wins,
     setPlayer1Wins,
     setPlayer2Wins,
     setWinner,
     selectedIcon,
+    setTie,
+    tie,
   } = props;
   const [selectedType, setSelectedType] = useState(selectedIcon);
   const [gameFinished, setGameFinished] = useState(false);
   const [winnerSet, setWinnerSet] = useState([]);
 
-  const winningSet = [
+  const winningPossibilities = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -32,38 +34,41 @@ export const GameBoard = (props) => {
     setWinnerSet([]);
     setGameFinished(false);
     setSelectedType(selectedIcon);
-  }, [arr, selectedIcon]);
+  }, [gameMatrix, selectedIcon]);
 
   const renderTicX = (index) => {
-    if (arr[index][0] === 1) {
+    if (gameMatrix[index][0] === 1) {
       return <img src={ticX} alt="X" width="90" height="90" />;
     }
-    if (arr[index][0] === 0) {
+    if (gameMatrix[index][0] === 0) {
       return <img src={ticO} alt="X" width="90" height="90" />;
     }
   };
 
   const onClick = (index) => {
-    if (selectedType === 'X' && !arr[index][1]) {
+    if (selectedType === 'X' && !gameMatrix[index][1]) {
       setSelectedType('O');
-      arr[index] = [1, true];
-    } else if (selectedType === 'O' && !arr[index][1]) {
+      gameMatrix[index] = [1, true];
+    } else if (selectedType === 'O' && !gameMatrix[index][1]) {
       setSelectedType('X');
-      arr[index] = [0, true];
+      gameMatrix[index] = [0, true];
     }
 
     checkWinner();
   };
 
   const checkWinner = () => {
-    for (let i = 0; i < winningSet.length; i++) {
+    let isMatchTied = true;
+
+    for (let i = 0; i < winningPossibilities.length; i++) {
       if (
-        arr[winningSet[i][0]][0] &&
-        arr[winningSet[i][1]][0] &&
-        arr[winningSet[i][2]][0]
+        gameMatrix[winningPossibilities[i][0]][0] &&
+        gameMatrix[winningPossibilities[i][1]][0] &&
+        gameMatrix[winningPossibilities[i][2]][0]
       ) {
-        setWinnerSet([...winningSet[i]]);
+        setWinnerSet([...winningPossibilities[i]]);
         setGameFinished(true);
+
         if (selectedIcon === 'X') {
           setPlayer1Wins(player1Wins + 1);
           setWinner('Player 1');
@@ -71,28 +76,35 @@ export const GameBoard = (props) => {
           setPlayer2Wins(player2Wins + 1);
           setWinner('Player 2');
         }
+        return;
+      }
+
+      if (
+        gameMatrix[winningPossibilities[i][0]][0] == 0 &&
+        gameMatrix[winningPossibilities[i][1]][0] == 0 &&
+        gameMatrix[winningPossibilities[i][2]][0] == 0
+      ) {
+        setWinnerSet([...winningPossibilities[i]]);
+        setGameFinished(true);
+        if (selectedIcon === 'X') {
+          setPlayer2Wins(player2Wins + 1);
+          setWinner('Player 2');
+        } else {
+          setPlayer1Wins(player1Wins + 1);
+          setWinner('Player 1');
+        }
+        return;
+      }
+
+      if (gameMatrix[i][0] === undefined) {
+        isMatchTied = false;
       }
     }
 
-    for (let i = 0; i < winningSet.length; i++) {
-      if (
-        arr[winningSet[i][0]][0] == 0 &&
-        arr[winningSet[i][1]][0] == 0 &&
-        arr[winningSet[i][2]][0] == 0
-      ) {
-        setWinnerSet([...winningSet[i]]);
-        setGameFinished(true);
-        if (selectedIcon === 'X') {
-          setPlayer2Wins(player2Wins + 1);
-          setWinner('Player 2');
-        } else {
-          setPlayer1Wins(player1Wins + 1);
-          setWinner('Player 1');
-        }
-      }
+    if (isMatchTied) {
+      setTie(true);
     }
   };
-
   return (
     <div className="game-board">
       <div className="grid">
@@ -102,6 +114,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
         <GridItem
           renderFunction={renderTicX}
@@ -109,6 +122,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
         <GridItem
           renderFunction={renderTicX}
@@ -116,6 +130,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
         <GridItem
           renderFunction={renderTicX}
@@ -123,6 +138,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
         <GridItem
           renderFunction={renderTicX}
@@ -130,6 +146,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
         <GridItem
           renderFunction={renderTicX}
@@ -137,6 +154,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
         <GridItem
           renderFunction={renderTicX}
@@ -144,6 +162,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
         <GridItem
           renderFunction={renderTicX}
@@ -151,6 +170,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
         <GridItem
           renderFunction={renderTicX}
@@ -158,6 +178,7 @@ export const GameBoard = (props) => {
           onClickGrid={onClick}
           gameFinished={gameFinished}
           winnerSet={winnerSet}
+          tie={tie}
         />
       </div>
     </div>
@@ -165,11 +186,19 @@ export const GameBoard = (props) => {
 };
 
 const GridItem = (props) => {
-  const { renderFunction, index, onClickGrid, winnerSet, gameFinished } = props;
+  const {
+    renderFunction,
+    index,
+    onClickGrid,
+    winnerSet,
+    gameFinished,
+    tie,
+  } = props;
   const loserGrid = gameFinished ? 'grid-item-loser' : '';
+  const tieStyle = tie ? 'grid-item-loser' : '';
   const style = winnerSet.includes(index)
-    ? 'grid-item'
-    : `grid-item ${loserGrid}`;
+    ? `grid-item ${tieStyle}`
+    : `grid-item ${tieStyle} ${loserGrid}`;
 
   return (
     <div className={style} onClick={() => onClickGrid(index)}>
