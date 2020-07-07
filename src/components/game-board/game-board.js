@@ -1,7 +1,9 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react';
 import './game-board.css';
 import ticX from '../../assets/tic-tac-toe-x.jpg';
 import ticO from '../../assets/tic-tac-toe-o.jpg';
+import { SettingIcon } from '../setting-icon/setting-icon';
 
 export const GameBoard = (props) => {
   const {
@@ -180,6 +182,9 @@ export const GameBoard = (props) => {
           winnerSet={winnerSet}
           tie={tie}
         />
+      </div>
+      <div className="setting">
+        <SettingIcon />
       </div>
     </div>
   );

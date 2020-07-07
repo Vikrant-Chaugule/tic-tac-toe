@@ -2,12 +2,12 @@
     background-color: white;
     width: 45vw;
     height: 600px;
-    margin: 5% auto;
+    margin: 2% auto;
     text-align: center;
     position: relative;
     padding: 2%;
     border-radius: 20px;
-    box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important
+    box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .grid {
@@ -36,6 +36,12 @@
     opacity: 0.4;
 }
 
+.setting {
+    display: flex;
+    justify-content: center;
+    margin: 10% auto;
+}
+
 @media (max-width:720px) {
     .game-board {
         height: 500px;
@@ -50,7 +56,7 @@
 @media (max-width:480px) {
     .game-board {
         height: 300px;
-        margin: 20% auto;
+        margin: 10% auto;
         width: 90vw;
     }
     .grid {
